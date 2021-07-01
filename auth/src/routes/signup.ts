@@ -31,7 +31,7 @@ router.post('/api/users/signup', [
     const userJwt = jwt.sign({
         id: user.id,
         email: user.email
-    }, 'SECRET');
+    }, process.env.JWT_KEY!);
 
     // set cookie
     req.session = {
