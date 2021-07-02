@@ -6,11 +6,11 @@ interface UserAttrs {
     password: string;
 }
 
-interface UserModel extends mongoose.Model<UserDoc> {
+export interface UserModel extends mongoose.Model<UserDoc> {
     build(attrs: UserAttrs): UserDoc;
 }
 
-interface UserDoc extends mongoose.Document {
+export interface UserDoc extends mongoose.Document {
     email: string;
     password: string;
 }
@@ -23,6 +23,15 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    }
+}, {
+    toJSON: {
+        transform(doc, ret) {
+            delete ret.password;
+            delete ret.__v;
+            ret.id = ret._id
+            delete ret._id
+        }
     }
 });
 
